@@ -172,4 +172,9 @@ enum {
  */
 - (UIBarPosition)positionForSelectionIndicator:(id<UIBarPositioning>)bar;
 
+/**
+ Implement this method if you need to check some condition before allowing the segmented control to change to a new "index". If not implemented, the segment index will be selected.
+ */
+- (BOOL)shouldSelectSegmentAtIndex:(NSInteger)index;
+
 @end

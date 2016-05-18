@@ -912,13 +912,16 @@
 - (void)willSelectedButton:(id)sender
 {
     UIButton *button = (UIButton *)sender;
+    BOOL askDelegate = [self.delegate respondsToSelector:@selector(shouldSelectSegmentAtIndex:)];
     
-    if (self.selectedSegmentIndex != button.tag) {
-        [self setSelectedSegmentIndex:button.tag animated:YES];
-        [self sendActionsForControlEvents:UIControlEventValueChanged];
-    }
-    else if (!self.disableSelectedSegment) {
-        [self sendActionsForControlEvents:UIControlEventValueChanged];
+    if (!askDelegate || (askDelegate && [self.delegate shouldSelectSegmentAtIndex:button.tag])) {
+        if (self.selectedSegmentIndex != button.tag) {
+            [self setSelectedSegmentIndex:button.tag animated:YES];
+            [self sendActionsForControlEvents:UIControlEventValueChanged];
+        }
+        else if (!self.disableSelectedSegment) {
+            [self sendActionsForControlEvents:UIControlEventValueChanged];
+        }
     }
 }
 
